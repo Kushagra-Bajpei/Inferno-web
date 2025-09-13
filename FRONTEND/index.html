@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFERNO - Ignite Your Potential</title>
+    <link rel="icon" href="INFERNO LOGO (2).png" type="image/png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- Add this in the head section -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+</head>
+
+<body>
+    <div id="vanta-bg"></div>
+
+    <header>
+        <div class="logo" id="logo-3d">INFERNO</div>
+        <div class="logo">
+        <img src="INFERNO LOGO (2).png" alt="INFERNO Logo" class="logo-image">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#" id="team-link">Team</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="menu-toggle">
+            <div class="hamburger"></div>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <h1 class="title-3d">IGNITE YOUR <span>POTENTIAL</span></h1>
+            <p class="subtitle">Join the flame of innovation and creativity</p>
+            <!-- <button class="cta-button" id="cta-3d">Join Now</button> -->
+             <a href="https://qr.me-qr.com/ztxhhl1W" target="_blank">
+             <button class="cta-button" id="cta-3d">Join Now</button>
+             </a>
+            <div class="floating-shapes">
+                <div class="shape shape1"></div>
+                <div class="shape shape2"></div>
+                <div class="shape shape3"></div>
+            </div>
+        </section>
+
+        <section id="about" class="section about">
+            <div class="section-header">
+                <h2>About <span>Inferno</span></h2>
+                <div class="underline"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Inferno is the premier student organization at our college dedicated to fostering innovation,
+                        creativity, and technical excellence.</p>
+                    <p>We organize workshops, hackathons, and networking events to help students ignite their potential
+                        and stand out in the competitive world.</p>
+                </div>
+                <div class="about-visual">
+                    <div class="fire-animation" id="fire"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="events" class="section events">
+            <div class="section-header">
+                <h2>Our <span>Events</span></h2>
+                <div class="underline"></div>
+            </div>
+            <div class="event-cards">
+                <div class="event-card" id="card1">
+                    <div class="card-content">
+                        <h3>Hack the Flame</h3>
+                        <p>Annual 48-hour hackathon where students build innovative solutions to real-world problems.
+                        </p>
+                        <div class="event-date">Oct 15-17, 2025</div>
+                    </div>
+                </div>
+                <div class="event-card" id="card2">
+                    <div class="card-content">
+                        <h3>Spark Sessions</h3>
+                        <p>Weekly workshops on emerging technologies and skill development.</p>
+                        <div class="event-date">Every Wednesday</div>
+                    </div>
+                </div>
+                <div class="event-card" id="card3">
+                    <div class="card-content">
+                        <h3>Inferno Fest</h3>
+                        <p>Our flagship annual tech and cultural festival with competitions and performances.</p>
+                        <div class="event-date">August 5-7, 2025</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section contact">
+            <div class="section-header">
+                <h2>Get in <span>Touch</span></h2>
+                <div class="underline"></div>
+            </div>
+            <div class="contact-content">
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" required>
+                        <label for="name">Your Name</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" id="email" required>
+                        <label for="email">Your Email</label>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea id="message" required></textarea>
+                        <label for="message">Your Message</label>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submit-btn">Send Message</button>
+                </form>
+                <div class="contact-visual">
+                    <div class="particles" id="particles"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Chatbot -->
+        <div class="chatbot-container">
+            <div class="chatbot-toggle" id="chatbot-toggle">
+                <i>💬</i>
+            </div>
+            <div class="chatbot-interface" id="chatbot-interface">
+                <div class="chatbot-header">
+                    <h3>Inferno Help Assist</h3>
+                </div>
+                <div class="chatbot-messages" id="chatbot-messages">
+                    <div class="message bot-message">
+                        Hi there! I'm Inferno Help Assist. How can I help you with our events today?
+                    </div>
+                </div>
+                <div class="chatbot-input">
+                    <input type="text" id="chatbot-input" placeholder="Ask me about Inferno events...">
+                    <button id="chatbot-send"><i>➤</i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-content">
+            <div class="footer-logo">INFERNO</div>
+            <div class="social-links">
+                <a href="https://www.instagram.com/infernoofficial8?igsh=ZnFiNXgyaGlxNDQz"
+                    class="social-link">Instagram</a>
+                <a href="#" class="social-link">X</a>
+                <a href="https://www.linkedin.com/company/inferno-org/" class="social-link">Linkedin</a>
+                <a href="#" class="social-link">GitHub</a>
+            </div>
+            <div class="copyright">© 2025 Inferno. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Configuration - Update these URLs to match your backend
+            const API_BASE_URL = 'http://localhost:3000/api/v1'; // Change this to your backend URL
+
+            // Initialize Vanta.js background
+            VANTA.NET({
+                el: "#vanta-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0xff4d00,
+                backgroundColor: 0x1a1a1a,
+                points: 12.00,
+                maxDistance: 22.00,
+                spacing: 17.00
+            });
+
+            // Team link functionality
+            document.getElementById('team-link').addEventListener('click', function (e) {
+                e.preventDefault();
+                window.location.href = 'team.html';
+            });
+
+            // Contact Form Functionality
+            const contactForm = document.getElementById('contact-form');
+            const submitBtn = document.getElementById('submit-btn');
+
+            contactForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const message = document.getElementById('message').value.trim();
+
+                // Basic validation
+                if (!name || !email || !message) {
+                    showNotification('Please fill in all fields.', 'error');
+                    return;
+                }
+
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showNotification('Please enter a valid email address.', 'error');
+                    return;
+                }
+
+                // Show loading state
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/contact/submit`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            email: email,
+                            message: message
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        showNotification(data.message || 'Thank you for your message! We will get back to you soon.', 'success');
+                        contactForm.reset();
+                    } else {
+                        showNotification(data.error || 'Something went wrong. Please try again.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Contact form error:', error);
+                    showNotification('Network error. Please check your connection and try again.', 'error');
+                } finally {
+                    // Reset button state
+                    submitBtn.textContent = 'Send Message';
+                    submitBtn.disabled = false;
+                }
+            });
+
+            // Chatbot functionality
+            const chatbotToggle = document.getElementById('chatbot-toggle');
+            const chatbotInterface = document.getElementById('chatbot-interface');
+            const chatbotMessages = document.getElementById('chatbot-messages');
+            const chatbotInput = document.getElementById('chatbot-input');
+            const chatbotSend = document.getElementById('chatbot-send');
+
+            // Toggle chatbot interface
+            chatbotToggle.addEventListener('click', function () {
+                chatbotInterface.classList.toggle('active');
+            });
+
+
+            // Send message function
+            async function sendMessage() {
+                const message = chatbotInput.value.trim();
+                if (!message) return;
+
+                // Add user message to chat
+                addMessage(message, 'user');
+                chatbotInput.value = '';
+
+                // Show typing indicator
+                const typingDiv = showTypingIndicator();
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/gemini/prompt`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: message
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    // Remove typing indicator
+                    removeTypingIndicator(typingDiv);
+
+                    if (response.ok) {
+                        addMessage(data.reply, 'bot');
+                    } else {
+                        addMessage(data.error || 'Sorry, I encountered an error. Please try again.', 'bot');
+                    }
+                } catch (error) {
+                    console.error('Chatbot error:', error);
+                    removeTypingIndicator(typingDiv);
+                    addMessage("Sorry, I'm having trouble connecting right now. Please try again later.", 'bot');
+                }
+            }
+
+            // Add message to chat
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', `${sender}-message`);
+                messageDiv.textContent = text;
+                chatbotMessages.appendChild(messageDiv);
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }
+
+            // Show typing indicator
+            function showTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.classList.add('message', 'bot-message', 'typing-indicator');
+                typingDiv.innerHTML = '<span>Typing</span><span>.</span><span>.</span><span>.</span>';
+                chatbotMessages.appendChild(typingDiv);
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                return typingDiv;
+            }
+
+            // Remove typing indicator
+            function removeTypingIndicator(typingDiv) {
+                if (typingDiv && typingDiv.parentNode) {
+                    typingDiv.remove();
+                }
+            }
+
+            // Send message on button click or Enter key
+            chatbotSend.addEventListener('click', sendMessage);
+            chatbotInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Sample questions for quick replies
+            const sampleQuestions = [
+                "When is the next hackathon?",
+                "How can I join Inferno?",
+                "What events are coming up?",
+                "Tell me about the team structure",
+                "Who is the faculty facilitator?"
+            ];
+
+            // Add sample questions to chat
+            sampleQuestions.forEach(question => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('message', 'bot-message', 'sample-question');
+                questionDiv.textContent = question;
+                questionDiv.style.cursor = 'pointer';
+                questionDiv.style.margin = '0.5rem 0';
+                questionDiv.style.padding = '0.5rem';
+                questionDiv.style.borderRadius = '15px';
+                questionDiv.style.backgroundColor = 'rgba(255, 77, 0, 0.1)';
+                questionDiv.style.transition = 'all 0.3s ease';
+
+                questionDiv.addEventListener('mouseover', () => {
+                    questionDiv.style.backgroundColor = 'rgba(255, 77, 0, 0.2)';
+                });
+
+                questionDiv.addEventListener('mouseout', () => {
+                    questionDiv.style.backgroundColor = 'rgba(255, 77, 0, 0.1)';
+                });
+
+                questionDiv.addEventListener('click', () => {
+                    chatbotInput.value = question;
+                    sendMessage();
+                });
+
+                chatbotMessages.appendChild(questionDiv);
+            });
+
+
+
+
+            // Notification system
+            function showNotification(message, type = 'info') {
+                // Remove existing notifications
+                const existingNotification = document.querySelector('.notification');
+                if (existingNotification) {
+                    existingNotification.remove();
+                }
+
+                const notification = document.createElement('div');
+                notification.classList.add('notification', `notification-${type}`);
+                notification.textContent = message;
+
+                // Style the notification
+                Object.assign(notification.style, {
+                    position: 'fixed',
+                    top: '20px',
+                    right: '20px',
+                    padding: '15px 20px',
+                    borderRadius: '8px',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    zIndex: '10000',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                    transform: 'translateX(100%)',
+                    transition: 'transform 0.3s ease',
+                    maxWidth: '300px',
+                    wordWrap: 'break-word'
+                });
+
+                // Set background color based on type
+                if (type === 'success') {
+                    notification.style.backgroundColor = '#28a745';
+                } else if (type === 'error') {
+                    notification.style.backgroundColor = '#dc3545';
+                } else {
+                    notification.style.backgroundColor = '#ff4d00';
+                }
+
+                document.body.appendChild(notification);
+
+                // Animate in
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(0)';
+                }, 100);
+
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.remove();
+                        }
+                    }, 300);
+                }, 5000);
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

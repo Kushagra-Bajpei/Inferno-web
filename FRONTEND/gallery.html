@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - INFERNO</title>
+    <link rel="icon" href="INFERNO LOGO (2).png" type="image/png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <style>
+        /* Additional styles for gallery page */
+        .gallery-container {
+            padding: 5rem 5%;
+            min-height: 100vh;
+        }
+        
+        .gallery-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            border: 1px solid rgba(255, 77, 0, 0.3);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: var(--dark);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 77, 0, 0.1);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 77, 0, 0.2);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(26, 26, 26, 0.9), transparent);
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+        
+        .gallery-category {
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+        
+        /* Lightbox modal */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(255, 77, 0, 0.3);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .lightbox-close:hover {
+            color: var(--primary);
+        }
+        
+        .lightbox-caption {
+            color: white;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 2rem;
+        }
+        
+        .lightbox-prev, .lightbox-next {
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox-prev:hover, .lightbox-next:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .lightbox-nav {
+                padding: 0 1rem;
+            }
+            
+            .lightbox-prev, .lightbox-next {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-item {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="vanta-bg"></div>
+
+    <header>
+        <div class="logo">
+            <img src="INFERNO LOGO (2).png" alt="INFERNO Logo" class="logo-image">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#events">Events</a></li>
+                <li><a href="team.html">Team</a></li>
+                 <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="menu-toggle">
+            <div class="hamburger"></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="gallery-container">
+            <div class="section-header">
+                <h2>Our <span>Gallery</span></h2>
+                <div class="underline"></div><br><br>
+                <p>A glimpse into our events and activities which we did recently and it was our best experience to organized </p>
+            </div>
+            
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="hackathon">Hackathons</button>
+                <button class="filter-btn" data-filter="workshop">Workshops</button>
+                <button class="filter-btn" data-filter="fest">Festivals</button>
+                <button class="filter-btn" data-filter="meetup">Meetups</button>
+            </div>
+            
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Gallery items will be populated by JavaScript -->
+            </div>
+        </section>
+    </main>
+    
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close" id="lightbox-close">&times;</span>
+            <img class="lightbox-img" id="lightbox-img" src="" alt="">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+            <div class="lightbox-nav">
+                <div class="lightbox-prev" id="lightbox-prev">&#10094;</div>
+                <div class="lightbox-next" id="lightbox-next">&#10095;</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+
+        <div class="footer-content">
+            <div class="footer-logo">INFERNO</div>
+            <div class="social-links">
+                <a href="https://www.instagram.com/infernoofficial8?igsh=ZnFiNXgyaGlxNDQz"
+                    class="social-link">Instagram</a>
+                <a href="#" class="social-link">X</a>
+                <a href="https://www.linkedin.com/company/inferno-org/" class="social-link">Linkedin</a>
+                <a href="#" class="social-link">GitHub</a>
+            </div>
+            <div class="copyright">© 2025 Inferno. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Vanta.js background
+            VANTA.NET({
+                el: "#vanta-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0xff4d00,
+                backgroundColor: 0x1a1a1a,
+                points: 12.00,
+                maxDistance: 22.00,
+                spacing: 17.00
+            });
+
+            // Gallery data - Replace with your actual images and data
+            const galleryData = [
+                {
+                    src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    title: "Hack the Flame 2024",
+                    category: "hackathon",
+                    description: "Our annual hackathon where students build innovative solutions"
+                },
+                {
+                    src: "https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    title: "Web Development Workshop",
+                    category: "workshop",
+                    description: "Students learning modern web development techniques"
+                },
+                {
+                    src: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    title: "Team Building Session",
+                    category: "meetup",
+                    description: "Team members collaborating on new ideas"
+                },
+                {
+                    src: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    title: "Inferno Fest Stage",
+                    category: "fest",
+                    description: "Main stage at our annual tech and cultural festival"
+                },
+                {
+                    src: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    title: "AI & ML Workshop",
+                    category: "workshop",
+                    description: "Hands-on session on artificial intelligence and machine learning"
+                },
+                {
+                    src: "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    title: "Coding Competition",
+                    category: "hackathon",
+                    description: "Students competing in our coding challenge"
+                },
+                {
+                    src: "https://images.unsplash.com/photo-1515168833906-d2a3b82b3029?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    title: "Inferno Fest Crowd",
+                    category: "fest",
+                    description: "Participants enjoying our annual festival"
+                },
+                {
+                    src: "https://images.unsplash.com/photo-1543269865-0a740d43b90c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    title: "Group Learning Session",
+                    category: "workshop",
+                    description: "Students collaborating and learning together"
+                },
+                {
+                    src: "https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    title: "Project Discussion",
+                    category: "meetup",
+                    description: "Team members discussing project ideas and strategies"
+                }
+            ];
+
+            // Populate gallery
+            const galleryGrid = document.getElementById('gallery-grid');
+            
+            function populateGallery(filter = 'all') {
+                galleryGrid.innerHTML = '';
+                
+                const filteredData = filter === 'all' 
+                    ? galleryData 
+                    : galleryData.filter(item => item.category === filter);
+                
+                filteredData.forEach((item, index) => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    galleryItem.dataset.category = item.category;
+                    galleryItem.dataset.index = index;
+                    
+                    galleryItem.innerHTML = `
+                        <img src="${item.src}" alt="${item.title}" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">${item.title}</h3>
+                            <p class="gallery-category">${item.category.charAt(0).toUpperCase() + item.category.slice(1)}</p>
+                        </div>
+                    `;
+                    
+                    galleryGrid.appendChild(galleryItem);
+                    
+                    // Add click event to open lightbox
+                    galleryItem.addEventListener('click', () => {
+                        openLightbox(index, filteredData);
+                    });
+                });
+                
+                // Initialize ScrollReveal for gallery items
+                if (typeof ScrollReveal !== 'undefined') {
+                    const scrollReveal = ScrollReveal({
+                        origin: 'bottom',
+                        distance: '50px',
+                        duration: 1000,
+                        reset: false
+                    });
+                    
+                    scrollReveal.reveal('.gallery-item', { delay: 200, interval: 100 });
+                }
+            }
+            
+            // Initialize gallery
+            populateGallery();
+            
+            // Filter functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Filter gallery
+                    const filter = button.dataset.filter;
+                    populateGallery(filter);
+                });
+            });
+            
+            // Lightbox functionality
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            
+            let currentIndex = 0;
+            let currentData = [];
+            
+            function openLightbox(index, data) {
+                currentIndex = index;
+                currentData = data;
+                
+                lightbox.style.display = 'flex';
+                lightboxImg.src = data[index].src;
+                lightboxCaption.textContent = data[index].description;
+                
+                // Prevent body scrolling when lightbox is open
+                document.body.style.overflow = 'hidden';
+            }
+            
+            function closeLightbox() {
+                lightbox.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+            
+            function navigateLightbox(direction) {
+                currentIndex += direction;
+                
+                if (currentIndex < 0) {
+                    currentIndex = currentData.length - 1;
+                } else if (currentIndex >= currentData.length) {
+                    currentIndex = 0;
+                }
+                
+                lightboxImg.src = currentData[currentIndex].src;
+                lightboxCaption.textContent = currentData[currentIndex].description;
+            }
+            
+            // Lightbox event listeners
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxPrev.addEventListener('click', () => navigateLightbox(-1));
+            lightboxNext.addEventListener('click', () => navigateLightbox(1));
+            
+            // Close lightbox when clicking outside the image
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.style.display === 'flex') {
+                    if (e.key === 'Escape') {
+                        closeLightbox();
+                    } else if (e.key === 'ArrowLeft') {
+                        navigateLightbox(-1);
+                    } else if (e.key === 'ArrowRight') {
+                        navigateLightbox(1);
+                    }
+                }
+            });
+            
+            // Menu toggle functionality (from your script.js)
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav ul');
+            
+            if (menuToggle && nav) {
+                menuToggle.addEventListener('click', function() {
+                    menuToggle.classList.toggle('active');
+                    nav.classList.toggle('active');
+                });
+            }
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                    
+                    // Close mobile menu if open
+                    if (menuToggle && nav) {
+                        menuToggle.classList.remove('active');
+                        nav.classList.remove('active');
+                    }
+                });
+            });
+        
+        });
+    </script>
+</body>
+
+</html>

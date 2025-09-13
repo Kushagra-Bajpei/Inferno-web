@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFERNO - Our Team</title>
+     <link rel="icon" href="INFERNO LOGO (2).png" type="image/png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <style>
+        :root {
+            --primary: #ff4d00;
+            --primary-dark: #e04400;
+            --secondary: #ff9500;
+            --accent: #ffcc00;
+            --dark: #1a1a1a;
+            --light: #f5f5f5;
+            --text: #333;
+            --text-light: #777;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #vanta-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background-color: rgba(26, 26, 26, 0.7);
+            border-bottom: 1px solid rgba(255, 77, 0, 0.2);
+        }
+
+        /* .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--accent);
+            transform: scale(1.05);
+        } */
+         /* Logo styling - removed text logo, kept only image */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-image {
+    height: 50px; /* Adjust size as needed */
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+.logo-image:hover {
+    transform: scale(1.05);
+}
+
+/* Remove the text logo styling */
+#logo-3d {
+    display: none;
+}
+
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger {
+            width: 25px;
+            height: 3px;
+            background-color: var(--light);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger::before,
+        .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 3px;
+            background-color: var(--light);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger::before {
+            top: -8px;
+        }
+
+        .hamburger::after {
+            top: 8px;
+        }
+
+        main {
+            padding-top: 80px;
+        }
+
+        .section {
+            padding: 5rem 5%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .section-header h2 span {
+            color: var(--primary);
+        }
+
+        .underline {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        .team-category {
+            margin-bottom: 4rem;
+        }
+
+        .team-category h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .member {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 77, 0, 0.1);
+        }
+
+        .member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 77, 0, 0.2);
+        }
+
+        .member-visual {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .member h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .member p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .faculty-facilitator {
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .faculty-facilitator h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        footer {
+            background: rgba(10, 10, 10, 0.8);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 77, 0, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-link {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Floating shapes */
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            background: var(--primary);
+            opacity: 0.3;
+            filter: blur(20px);
+            border-radius: 50%;
+        }
+
+        .shape1 {
+            width: 200px;
+            height: 200px;
+            top: 20%;
+            left: 10%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .shape2 {
+            width: 150px;
+            height: 150px;
+            bottom: 15%;
+            right: 10%;
+            animation: float 10s infinite ease-in-out;
+            background: var(--accent);
+        }
+
+        .shape3 {
+            width: 100px;
+            height: 100px;
+            top: 50%;
+            left: 50%;
+            animation: float 12s infinite ease-in-out;
+            background: var(--secondary);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            nav ul {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(26, 26, 26, 0.95);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.5s ease;
+            }
+            
+            nav ul.active {
+                left: 0;
+            }
+            
+            nav ul li {
+                margin: 1.5rem 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .menu-toggle.active .hamburger {
+                background: transparent;
+            }
+            
+            .menu-toggle.active .hamburger::before {
+                transform: rotate(45deg);
+                top: 0;
+            }
+            
+            .menu-toggle.active .hamburger::after {
+                transform: rotate(-45deg);
+                top: 0;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section {
+                padding: 3rem 5%;
+            }
+            
+            .team-members {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="vanta-bg"></div>
+    
+    <header>
+        <div class="logo" id="logo-3d">INFERNO</div>
+        <div class="logo">
+        <img src="INFERNO LOGO (2).png" alt="INFERNO Logo" class="logo-image">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#events">Events</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="menu-toggle">
+            <div class="hamburger"></div>
+        </div>
+    </header>
+
+    <main>
+        <section id="team" class="section team">
+            <div class="section-header">
+                <h2>Meet the <span>Team</span></h2>
+                <div class="underline"></div>
+            </div>
+            
+            <div class="floating-shapes">
+                <div class="shape shape1"></div>
+                <div class="shape shape2"></div>
+                <div class="shape shape3"></div>
+            </div>
+<!--             
+            <div class="team-categories"> -->
+                <!-- Graphic Team -->
+                <div class="team-category">
+
+                    
+
+
+                    <h3>Graphic Team</h3>
+                    <!-- <div class="team-members">
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">V</div>
+                            </div> -->
+                            <div class="team-members">
+            <div class="member">
+                <div class="member-visual">
+                    <!-- <img src="INFERNO LOGO (2).png" alt="Vishwajeet Survase" class="member-avatar"> -->
+                        <div class="member-avatar">V</div>
+                </div>
+                            <h3>Vishwajeet Survase</h3>
+                        </div>
+
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">V</div>
+                            </div>
+                            <h3>Vinay Kothari (C.F.O.)</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">D</div>
+                            </div>
+                            <h3>Divya Jain</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">S</div>
+                            </div>
+                            <h3>Somesh Ranjan Biswal</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">K</div>
+                            </div>
+                            <h3>Karan Jain (H.R.)</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">A</div>
+                            </div>
+                            <h3>Ayush Verma</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">R</div>
+                            </div>
+                            <h3>Ramdev</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">A</div>
+                            </div>
+                            <h3>Anjana Karthik</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">A</div>
+                            </div>
+                            <h3>Anugu Siddharth Reddy</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">R</div>
+                            </div>
+                            <h3>Ruthala Satish</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">P</div>
+                            </div>
+                            <h3>Paras Patil</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Management Team -->
+                <div class="team-category">
+                    <h3>Management Team</h3>
+                    <div class="team-members">
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">A</div>
+                            </div>
+                            <h3>Aryan</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">A</div>
+                            </div>
+                            <h3>Aryan Singh</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">I</div>
+                            </div>
+                            <h3>Istiyaq Ahmed</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">A</div>
+                            </div>
+                            <h3>Ankush Chopane</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">A</div>
+                            </div>
+                            <h3>Aditya Karankal</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">S</div>
+                            </div>
+                            <h3>Sameer</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">M</div>
+                            </div>
+                            <h3>Martin George</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">A</div>
+                            </div>
+                            <h3>Abhinav</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">U</div>
+                            </div>
+                            <h3>Utsav Singh</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">S</div>
+                            </div>
+                            <h3>Shivam Kumar Singh</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">S</div>
+                            </div>
+                            <h3>Sujal Patyal</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">S</div>
+                            </div>
+                            <h3>Sunpreet</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">G</div>
+                            </div>
+                            <h3>Gaurav Sharma</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">V</div>
+                            </div>
+                            <h3>Vishal Kumar</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">P</div>
+                            </div>
+                            <h3>Piyush Singh</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Marketing Team -->
+                <div class="team-category">
+                    <h3>Marketing Team</h3>
+                    <div class="team-members">
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">A</div>
+                            </div>
+                            <h3>Ansh Varshney</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">S</div>
+                            </div>
+                            <h3>Shivam Sharma</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">Y</div>
+                            </div>
+                            <h3>Yashika Khurana</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">K</div>
+                            </div>
+                            <h3>Kushagra Bajpai</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">P</div>
+                            </div>
+                            <h3>Pravalika</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">M</div>
+                            </div>
+                            <h3>Manasi Pandey</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">S</div>
+                            </div>
+                            <h3>Sharad Soni</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">J</div>
+                            </div>
+                            <h3>Jatin Kaushik</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Media Team -->
+                <div class="team-category">
+                    <h3>Media Team</h3>
+                    <div class="team-members">
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">A</div>
+                            </div>
+                            <h3>Akshpreet Singh</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">J</div>
+                            </div>
+                            <h3>Jatin Yadav</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">Y</div>
+                            </div>
+                            <h3>Yashika Khurana</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">R</div>
+                            </div>
+                            <h3>Riddhima</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">D</div>
+                            </div>
+                            <h3>Deepanjali</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">K</div>
+                            </div>
+                            <h3>Khushi Dwivedi</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">Y</div>
+                            </div>
+                            <h3>Yuvika Patel</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">İ</div>
+                            </div>
+                            <h3>ila Seth</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- External Affairs -->
+                <div class="team-category">
+                    <h3>External Affairs</h3>
+                    <div class="team-members">
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">U</div>
+                            </div>
+                            <h3>Ujjwal Pathak</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">K</div>
+                            </div>
+                            <h3>Krishna</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">Y</div>
+                            </div>
+                            <h3>Yash Raj Singh</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">S</div>
+                            </div>
+                            <h3>Shivanah Singh (C.E.O.)</h3>
+                        </div>
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">A</div>
+                            </div>
+                            <h3>Ayush Gautam</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video Editor -->
+                <div class="team-category">
+                    <h3>Video Editor</h3>
+                    <div class="team-members">
+                        <div class="member">
+                            <div class="member-visual">
+                                <div class="member-avatar">K</div>
+                            </div>
+                            <h3>Kedarnath</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faculty-facilitator">
+                <h3>Faculty Facilitator</h3>
+                <div class="member">
+                    <div class="member-visual">
+                        <div class="member-avatar">R</div>
+                    </div>
+                    <h3>Raghu Raja Sharma</h3>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">INFERNO</div>
+            <div class="social-links">
+                <a href="https://www.instagram.com/infernoofficial8?igsh=ZnFiNXgyaGlxNDQz" class="social-link">Instagram</a>
+                <a href="#" class="social-link">Twitter</a>
+                <a href="https://www.linkedin.com/company/inferno-org/" class="social-link">Linkedin</a>
+                <a href="#" class="social-link">GitHub</a>
+            </div>
+            <div class="copyright">© 2025 Inferno. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Vanta.js background
+            VANTA.NET({
+                el: "#vanta-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0xff4d00,
+                backgroundColor: 0x1a1a1a,
+                points: 12.00,
+                maxDistance: 22.00,
+                spacing: 17.00
+            });
+
+            // Menu toggle functionality
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('nav ul');
+            
+            menuToggle.addEventListener('click', function() {
+                menuToggle.classList.toggle('active');
+                nav.classList.toggle('active');
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId.startsWith('#')) {
+                        const targetElement = document.querySelector(targetId);
+                        
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        window.location.href = targetId;
+                    }
+                    
+                    // Close mobile menu if open
+                    menuToggle.classList.remove('active');
+                    nav.classList.remove('active');
+                });
+            });
+
+            // 3D effect for logo
+            const logo = document.getElementById('logo-3d');
+            
+            logo.addEventListener('mousemove', function(e) {
+                const x = e.offsetX;
+                const y = e.offsetY;
+                const centerX = this.offsetWidth / 2;
+                const centerY = this.offsetHeight / 2;
+                
+                const shadowX = (x - centerX) / 10;
+                const shadowY = (y - centerY) / 10;
+                const textShadow = `${shadowX}px ${shadowY}px 10px rgba(255, 77, 0, 0.7)`;
+                
+                this.style.textShadow = textShadow;
+                this.style.transform = `perspective(500px) rotateX(${(centerY - y) / 20}deg) rotateY(${(x - centerX) / 20}deg)`;
+            });
+            
+            logo.addEventListener('mouseleave', function() {
+                this.style.textShadow = 'none';
+                this.style.transform = 'none';
+            });
+
+            // 3D member effects
+            const members = document.querySelectorAll('.member');
+            members.forEach((member, index) => {
+                const avatar = member.querySelector('.member-avatar');
+                avatar.textContent = member.querySelector('h3').textContent.charAt(0);
+                
+                member.addEventListener('mousemove', function(e) {
+                    const x = e.offsetX;
+                    const y = e.offsetY;
+                    const centerX = this.offsetWidth / 2;
+                    const centerY = this.offsetHeight / 2;
+                    
+                    this.style.transform = `perspective(1000px) rotateX(${(centerY - y) / 20}deg) rotateY(${(x - centerX) / 20}deg)`;
+                });
+                
+                member.addEventListener('mouseleave', function() {
+                    this.style.transform = 'none';
+                });
+            });
+
+            // Scroll reveal animations
+            const scrollReveal = ScrollReveal({
+                origin: 'bottom',
+                distance: '50px',
+                duration: 1000,
+                reset: true
+            });
+            
+            scrollReveal.reveal('.section-header', { delay: 200 });
+            scrollReveal.reveal('.team-category', { delay: 300, interval: 200 });
+            scrollReveal.reveal('.member', { delay: 300, interval: 100 });
+        });
+    </script>
+</body>
+</html>
