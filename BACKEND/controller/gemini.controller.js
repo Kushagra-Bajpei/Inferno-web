@@ -45,7 +45,7 @@ export const handleChatbotQuery = async (req, res) => {
             message: message
         });
 
-         const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL_NAME || "gemini-1.5-pro" });
+         const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash" });
 
 
         const systemPrompt = `
