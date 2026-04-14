@@ -11,7 +11,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon index.js",
+    "start": "node index.js",
     "dev": "npx nodemon index.js",
     "production": "node index.js"
   },
