@@ -7,6 +7,8 @@ import geminiRoutes from "./routes/gemini.route.js";
 
 dotenv.config();
 
+console.log("Allowed Origins:", process.env.CORS_ORIGINS);
+
 const app = express();
 const port = process.env.PORT || 3000;
 const MONGO_URL = process.env.MONGO_URI;
