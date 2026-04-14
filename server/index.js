@@ -13,7 +13,9 @@ const MONGO_URL = process.env.MONGO_URI;
 
 // Middleware
 app.use(cors({
-    origin: process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : ['http://localhost:5173'],
+    origin: process.env.CORS_ORIGINS 
+        ? process.env.CORS_ORIGINS.split(',').map(origin => origin.trim()) 
+        : ['http://localhost:5173'],
     credentials: true
 }));
 app.use(express.json());
