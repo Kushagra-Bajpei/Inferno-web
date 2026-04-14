@@ -13,7 +13,7 @@ const MONGO_URL = process.env.MONGO_URI;
 
 // Middleware
 app.use(cors({
-    origin: ['https://inferno-web.vercel.app','http://localhost:3000', 'http://127.0.0.1:5500', 'http://localhost:5500'], // Add your frontend URLs
+    origin: process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : ['http://localhost:5173'],
     credentials: true
 }));
 app.use(express.json());
@@ -21,7 +21,14 @@ app.use(express.json());
 // DB Connection
 mongoose
     .connect(MONGO_URL)
-    .then(() => console.log("Connected to MongoDB"))
+    .then(async () => {
+        console.log("Connected to MongoDB");
+        try {
+            await mongoose.connection.db.collection('contacts').dropIndex('email_1');
+        } catch (error) {
+            // Index might not exist or already be dropped, ignore
+        }
+    })
     .catch((error) => console.error("MongoDB Connection Error:", error));
 
 // Routes

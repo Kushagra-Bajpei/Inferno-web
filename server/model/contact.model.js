@@ -20,6 +20,11 @@ const contactSchema = new mongoose.Schema({
         trim: true,
         maxlength: 1000
     },
+    subject: {
+        type: String,
+        trim: true,
+        maxlength: 200
+    },
     createdAt: {
         type: Date,
         default: Date.now

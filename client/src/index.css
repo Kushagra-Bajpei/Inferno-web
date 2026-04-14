@@ -839,3 +839,415 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+/* Gallery Styles */
+.gallery-container { padding: 5rem 5%; min-height: 100vh; }
+.gallery-filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
+.filter-btn { padding: 0.5rem 1.5rem; background: rgba(255, 255, 255, 0.05); color: var(--light); border: 1px solid rgba(255, 77, 0, 0.3); border-radius: 25px; cursor: pointer; transition: all 0.3s ease; }
+.filter-btn:hover, .filter-btn.active { background: var(--primary); color: var(--dark); }
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+.gallery-item { position: relative; border-radius: 15px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; height: 250px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 77, 0, 0.1); }
+.gallery-item:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(255, 77, 0, 0.2); }
+.gallery-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.gallery-item:hover .gallery-image { transform: scale(1.1); }
+.gallery-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(26, 26, 26, 0.9), transparent); padding: 1.5rem; transform: translateY(100%); transition: transform 0.3s ease; }
+.gallery-item:hover .gallery-overlay { transform: translateY(0); }
+.gallery-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--light); }
+.gallery-category { font-size: 0.9rem; color: var(--primary); }
+.lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 2000; justify-content: center; align-items: center; }
+.lightbox-content { max-width: 90%; max-height: 90%; position: relative; }
+.lightbox-img { max-width: 100%; max-height: 80vh; border-radius: 10px; box-shadow: 0 5px 25px rgba(255, 77, 0, 0.3); }
+.lightbox-close { position: absolute; top: -40px; right: 0; color: white; font-size: 2rem; cursor: pointer; transition: color 0.3s ease; }
+.lightbox-close:hover { color: var(--primary); }
+.lightbox-caption { color: white; text-align: center; margin-top: 1rem; font-size: 1.1rem; }
+.lightbox-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; transform: translateY(-50%); padding: 0 2rem; }
+.lightbox-prev, .lightbox-next { color: white; font-size: 2rem; cursor: pointer; background: rgba(0, 0, 0, 0.5); width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; transition: all 0.3s ease; }
+.lightbox-prev:hover, .lightbox-next:hover { background: var(--primary); color: var(--dark); }
+
+/* Team Styles */
+.team-category { margin-bottom: 4rem; }
+.team-category h3 { font-size: 1.8rem; color: var(--primary); margin-bottom: 1.5rem; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
+.team-members { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+.member { text-align: center; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 15px; transition: all 0.3s ease; backdrop-filter: blur(10px); border: 1px solid rgba(255, 77, 0, 0.1); }
+.member:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(255, 77, 0, 0.2); }
+.member-visual { width: 150px; height: 150px; margin: 0 auto 1.5rem; border-radius: 50%; background: linear-gradient(45deg, var(--primary), var(--accent)); display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
+.member-avatar { width: 140px; height: 140px; border-radius: 50%; background: var(--dark); display: flex; justify-content: center; align-items: center; font-size: 3rem; font-weight: 700; color: var(--primary); }
+.member h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+.member p { color: var(--text-light); font-size: 0.9rem; }
+.faculty-facilitator { text-align: center; margin-top: 4rem; }
+.faculty-facilitator h3 { font-size: 1.8rem; color: var(--primary); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
+
+/* Enhanced FAQ & Contact Styles */
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.faq-item {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 77, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    background: rgba(255, 77, 0, 0.05);
+    border-color: var(--primary);
+    transform: translateY(-5px);
+}
+
+.faq-item h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid rgba(255, 77, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.info-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.special-note {
+    color: var(--primary);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 3rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.contact-left .contact-form h3, 
+.contact-right h3 {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    color: var(--light);
+}
+
+.contact-right {
+    background: rgba(26, 26, 26, 0.4);
+    border-radius: 15px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 77, 0, 0.1);
+    position: relative;
+}
+
+.team-contact-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-category {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 3px solid var(--primary);
+}
+
+.contact-category h4 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.contact-category a {
+    display: block;
+    color: var(--text-light);
+    text-decoration: none;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.contact-category a:hover {
+    color: var(--primary);
+}
+
+.contact-visual-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+.status-msg {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.status-msg.success { color: #28a745; }
+.status-msg.error { color: #dc3545; }
+
+@media (max-width: 992px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mini FAQ inside Contact section */
+.faq-mini-section {
+    margin-top: 3rem;
+}
+
+.faq-mini-section h3 {
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    color: var(--light);
+    opacity: 0.9;
+}
+
+.faq-grid.mini {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.faq-grid.mini .faq-item {
+    padding: 1.2rem;
+}
+
+.faq-grid.mini .faq-item h4 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.faq-grid.mini .faq-item p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+    .faq-grid.mini {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Professional Footer Styles */
+.footer.neat-clean {
+    background: #000000; 
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.footer.neat-clean .footer-top {
+    padding: 5rem 5% 4rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.footer.neat-clean .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    gap: 8rem;
+    width: 100%;
+}
+
+.footer.neat-clean .footer-logo,
+.footer.neat-clean .footer-col h3 {
+    color: var(--primary); /* Back to Inferno Orange */
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.footer.neat-clean .footer-desc {
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 1.5rem 0;
+    max-width: 400px;
+}
+
+/* Branding Info Line */
+.footer-info-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--primary);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 1rem;
+}
+
+.footer-col ul li a {
+    color: #ffffff;
+    opacity: 0.8;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+    opacity: 1;
+    color: var(--primary);
+}
+
+.footer-divider-container {
+    padding: 0 5%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.footer-horizontal-line {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08); 
+}
+
+.footer.neat-clean .footer-bottom {
+    padding: 2.5rem 5%;
+    text-align: center;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.footer.neat-clean .footer-bottom p {
+    color: var(--primary);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    word-spacing: 5px;
+    opacity: 0.9;
+}
+
+@media (max-width: 992px) {
+    .neat-clean .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+    }
+}
+@media (max-width: 600px) {
+    .neat-clean .footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Legal Page Styles */
+.legal-page {
+    padding-top: 120px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.legal-content {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 3rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 77, 0, 0.1);
+    line-height: 1.8;
+}
+
+.legal-content h3 {
+    color: var(--primary);
+    margin: 2rem 0 1rem;
+    font-size: 1.4rem;
+}
+
+.legal-content p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+/* Footer Refinements */
+.brand-col {
+    text-align: left;
+}
+
+.brand-col .footer-logo {
+    text-align: left;
+    margin-left: 0;
+}
+
+.footer-col.brand-col .footer-socials {
+    justify-content: flex-start;
+}
+
+/* Updated Brand Section Styles */
+.footer-info-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--primary);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.info-icon-span {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+.footer-social-v2 {
+    display: flex;
+    gap: 1.2rem;
+}
+
+.social-btn-v2 {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 77, 0, 0.05);
+    border: 1px solid rgba(255, 77, 0, 0.2);
+    color: var(--primary);
+    border-radius: 50%; /* Modern circular icons */
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.social-btn-v2:hover {
+    background: var(--primary);
+    color: #000;
+    transform: translateY(-5px) rotate(360deg);
+    box-shadow: 0 5px 15px rgba(255, 77, 0, 0.3);
+}

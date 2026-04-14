@@ -12,7 +12,7 @@
 import { Contact } from "../model/contact.model.js";
 
 export const sendMessage = async (req, res) => {
-  const { name, email, message } = req.body;
+  const { name, email, message, subject } = req.body;
   
   try {
     // Basic validation
@@ -24,7 +24,8 @@ export const sendMessage = async (req, res) => {
     const newContact = new Contact({
       name,
       email,
-      message
+      message,
+      subject
     });
 
     // Save to database
