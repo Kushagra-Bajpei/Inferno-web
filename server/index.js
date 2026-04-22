@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import contactRoutes from "./routes/contact.route.js";
-import geminiRoutes from "./routes/gemini.route.js";
+import aiRoutes from "./routes/ai.route.js";
 
 dotenv.config();
 
@@ -37,7 +37,7 @@ mongoose
 
 // Routes
 app.use("/api/v1/contact", contactRoutes);
-app.use("/api/v1/gemini", geminiRoutes);
+app.use("/api/v1/ai", aiRoutes);
 
 // Health check route
 app.get("/", (req, res) => {

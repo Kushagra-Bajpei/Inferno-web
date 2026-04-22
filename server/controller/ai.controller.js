@@ -1,14 +1,10 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { Prompt } from "../model/gemini.model.js";
-
+import Groq from "groq-sdk";
+import { Prompt } from "../model/ai.model.js";
 import dotenv from "dotenv";
+
 dotenv.config();
 
-
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const ORGANIZATION_KNOWLEDGE = `
 Inferno Organization Details:
@@ -45,9 +41,6 @@ export const handleChatbotQuery = async (req, res) => {
             message: message
         });
 
-         const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash" });
-
-
         const systemPrompt = `
         You are INFERNO-BOT, an official AI assistant for Inferno college organization.
         Your purpose is to provide accurate information about Inferno only. Respond in a friendly but professional tone.
@@ -64,37 +57,7 @@ export const handleChatbotQuery = async (req, res) => {
 
         Organization Knowledge:
         ${ORGANIZATION_KNOWLEDGE}
-
-        User Question: ${message}
         `;
-
-        // Retry Mechanism for Rate Limits
-        let aiResponse = "";
-        let maxRetries = 3;
-        let attempt = 0;
-
-        while (attempt < maxRetries) {
-            try {
-                const result = await model.generateContent(systemPrompt);
-                const response = await result.response;
-                aiResponse = response.text();
-                break; // Exit loop if success
-            } catch (error) {
-                if (error.message && error.message.includes("429")) {
-                    console.warn(`Rate limit hit. Retrying in 25 seconds... [Attempt ${attempt + 1}]`);
-                    await new Promise(resolve => setTimeout(resolve, 25000)); // Wait 25 seconds
-                    attempt++;
-                } else {
-                    throw error; // Throw if other error
-                }
-            }
-        }
-
-        if (aiResponse === "") {
-            return res.status(429).json({
-                error: "Too many requests. Please try again later after some time."
-            });
-        }
 
         const allowedKeywords = [
             'inferno', 'organization', 'member', 'team', 'join',
@@ -107,8 +70,27 @@ export const handleChatbotQuery = async (req, res) => {
             message.toLowerCase().includes(keyword.toLowerCase())
         );
 
+        let aiResponse = "";
+
         if (!isRelevant) {
             aiResponse = "I'm sorry, I can only provide information about Inferno organization. Please ask about our events, team, or activities.";
+        } else {
+            // Groq API Call
+            const chatCompletion = await groq.chat.completions.create({
+                messages: [
+                    {
+                        role: "system",
+                        content: systemPrompt,
+                    },
+                    {
+                        role: "user",
+                        content: message,
+                    },
+                ],
+                model: process.env.GROQ_MODEL_NAME || "llama-3.3-70b-versatile",
+            });
+
+            aiResponse = chatCompletion.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response.";
         }
 
         await Prompt.create({
@@ -123,12 +105,11 @@ export const handleChatbotQuery = async (req, res) => {
 
         let clientMessage = "AI service temporarily unavailable. Please try again later.";
 
-        // Handle quota errors directly
-        if (error.message && error.message.includes("429")) {
-            clientMessage = "Too many requests! You’ve hit the free limit. Please wait for some time and try again.";
+        if (error.status === 429) {
+            clientMessage = "Too many requests! You’ve hit the Groq rate limit. Please wait for some time and try again.";
         }
 
-        return res.status(500).json({
+        return res.status(error.status || 500).json({
             error: clientMessage,
             details: process.env.NODE_ENV === 'development' ? error.message : undefined
         });

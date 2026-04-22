@@ -32,7 +32,7 @@ const Chatbot = () => {
     setIsTyping(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/gemini/prompt`, {
+      const response = await fetch(`${API_BASE_URL}/ai/prompt`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
